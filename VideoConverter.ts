@@ -1,4 +1,4 @@
-import { readdir, stat } from 'fs/promises';
+import { readdir, stat, access } from 'fs/promises';
 import { join, extname, basename, dirname } from 'path';
 import { spawn } from 'child_process';
 
@@ -151,9 +151,30 @@ export class VideoConverter {
       });
     });
   }
-
   private async convertToMp4(inputFile: string): Promise<ConversionResult> {
     const outputFile = this.generateOutputPath(inputFile);
+
+    // Check if MP4 already exists and is verified
+    try {
+      await access(outputFile);
+      console.log(`  📄 Existing MP4 found: ${basename(outputFile)}`);
+
+      const verified = await this.verifyMp4File(outputFile);
+
+      if (verified) {
+        console.log('  ✓ Existing file verified, skipping conversion');
+        return {
+          input: inputFile,
+          output: outputFile,
+          success: true,
+          verified: true
+        };
+      } else {
+        console.log('  ⚠ Existing file failed verification, reconverting...');
+      }
+    } catch {
+      // File doesn't exist, proceed with conversion
+    }
 
     console.log(`  🔄 Converting to: ${basename(outputFile)}`);
 

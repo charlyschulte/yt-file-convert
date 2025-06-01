@@ -273,16 +273,23 @@ This project was created using Bun and TypeScript with strict type checking enab
 
 ### Project Structure
 ```
-├── index.ts             # Main entry point with configuration
-├── VideoConverter.ts    # Video conversion logic and utilities
-├── Dockerfile           # Docker image configuration
-├── docker-compose.yml   # Docker Compose configuration
-├── .dockerignore        # Docker ignore file
-├── build-docker.sh      # Linux/Mac build script
-├── build-docker.bat     # Windows build script
-├── package.json         # Project dependencies
-├── tsconfig.json        # TypeScript configuration
-└── README.md            # This file
+├── .github/
+│   └── workflows/
+│       └── docker-publish.yml  # GitHub Actions workflow for Docker publishing
+├── index.ts                    # Main entry point with configuration
+├── VideoConverter.ts           # Video conversion logic and utilities
+├── Dockerfile                  # Docker image configuration
+├── docker-compose.yml          # Docker Compose configuration
+├── .dockerignore               # Docker ignore file
+├── build-docker.sh             # Linux/Mac build script
+├── build-docker.bat            # Windows build script
+├── setup-github.sh             # Linux/Mac GitHub setup script
+├── setup-github.bat            # Windows GitHub setup script
+├── package.json                # Project dependencies
+├── tsconfig.json               # TypeScript configuration
+├── README.md                   # This file
+├── DOCKER.md                   # Detailed Docker usage guide
+└── DEPLOYMENT.md               # GitHub deployment guide
 ```
 
 ### Docker Benefits
@@ -312,3 +319,44 @@ The script runs directly with Bun, no build step required:
 ```bash
 bun run index.ts
 ```
+
+## 🚀 Deployment & Publishing
+
+This project includes GitHub Actions workflow for automatic Docker image building and publishing to GitHub Container Registry.
+
+### Quick Deployment Setup
+
+1. **Run the setup script:**
+   ```bash
+   # Linux/Mac
+   chmod +x setup-github.sh
+   ./setup-github.sh
+   
+   # Windows
+   setup-github.bat
+   ```
+
+2. **Create repository on GitHub:**
+   - Go to https://github.com/new
+   - Use the repository name suggested by the script
+   - Make it public for free GHCR access
+
+3. **Push and deploy:**
+   ```bash
+   git push -u origin main
+   ```
+
+4. **Use published image:**
+   ```bash
+   docker pull ghcr.io/yourusername/yt-file-convert:latest
+   ```
+
+📖 **For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md)**
+
+### GitHub Actions Features
+
+- ✅ **Multi-platform builds**: Supports AMD64 and ARM64 architectures
+- ✅ **Automatic versioning**: Creates `latest`, version tags, and branch tags
+- ✅ **Security**: Images are signed with cosign for integrity verification
+- ✅ **Caching**: Fast builds using GitHub Actions cache
+- ✅ **Pull request builds**: Test builds on PRs without publishing
