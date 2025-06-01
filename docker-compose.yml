@@ -2,7 +2,13 @@ version: '3.8'
 
 services:
   video-converter:
-    build: .
+    # Use the pre-built image from GitHub Container Registry
+    # Comment out the line below and uncomment 'build: .' to build locally
+    image: ghcr.io/yourusername/yt-file-convert:latest
+    
+    # Uncomment the line below to build the image locally instead of using GHCR
+    # build: .
+    
     container_name: video-converter
     volumes:
       # Mount your video folder to the container

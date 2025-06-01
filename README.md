@@ -2,6 +2,28 @@
 
 A TypeScript-based video conversion tool that automatically converts `.braw` and ProRes `.mov` files to MP4 format using FFmpeg.
 
+[![Docker](https://github.com/yourusername/yt-file-convert/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/yourusername/yt-file-convert/actions/workflows/docker-publish.yml)
+
+## 🚀 Quick Start with Pre-built Docker Image
+
+The easiest way to use this tool is with the pre-built Docker image from GitHub Container Registry:
+
+```bash
+# Pull the latest image from GitHub Container Registry
+docker pull ghcr.io/yourusername/yt-file-convert:latest
+
+# Run with your video folder (Windows)
+docker run --rm -v "C:\Users\YourName\Videos:/app/videos" ghcr.io/yourusername/yt-file-convert:latest
+
+# Run with your video folder (macOS/Linux)
+docker run --rm -v "/path/to/your/videos:/app/videos" ghcr.io/yourusername/yt-file-convert:latest
+```
+
+**Available Tags:**
+- `latest` - Latest stable version from main branch
+- `v1.0.0`, `v1.1.0`, etc. - Specific version releases
+- `main` - Latest development version
+
 ## Features
 
 - 🎬 **Automatic file detection**: Recursively scans folders and subfolders for `.braw` and `.mov` files
@@ -52,15 +74,39 @@ build-docker.bat
 
 ### Docker Usage (Recommended)
 
-#### Using Docker Compose
-1. Edit `docker-compose.yml` to point to your video folder
-2. Run the container:
+#### Option 1: Using Pre-built Image from GitHub Container Registry
+```bash
+# Use the latest published image
+docker run --rm -v "/path/to/your/videos:/app/videos" ghcr.io/yourusername/yt-file-convert:latest
+
+# Windows example
+docker run --rm -v "C:\Users\YourName\Videos:/app/videos" ghcr.io/yourusername/yt-file-convert:latest
+
+# Linux/Mac example
+docker run --rm -v "/Users/yourname/Videos:/app/videos" ghcr.io/yourusername/yt-file-convert:latest
+```
+
+#### Option 2: Using Docker Compose with Pre-built Image
+Update your `docker-compose.yml` to use the published image:
+```yaml
+version: '3.8'
+services:
+  video-converter:
+    image: ghcr.io/yourusername/yt-file-convert:latest
+    volumes:
+      - ./videos:/app/videos
+```
+
+Then run:
 ```bash
 docker-compose up
 ```
 
-#### Using Docker Run
+#### Option 3: Building Locally
 ```bash
+# Build your own image
+docker build -t video-converter .
+
 # Windows
 docker run -v "%cd%\videos:/app/videos" video-converter
 
