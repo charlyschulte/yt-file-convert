@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  video-converter:
+    build: .
+    container_name: video-converter
+    volumes:
+      # Mount your video folder to the container
+      # Change the left path to your actual video folder location
+      - ./videos:/app/videos
+      # Optional: mount additional folders
+      # - /path/to/your/videos:/app/videos
+      # - C:\Videos:/app/videos  # Windows example
+    environment:
+      - NODE_ENV=production
+    # Run interactively so you can see the output
+    stdin_open: true
+    tty: true
+    # Override the default command if needed
+    # command: ["bun", "run", "index.ts", "/app/videos"]

@@ -1,0 +1,18 @@
+# Ignore files that shouldn't be included in Docker image
+node_modules
+*.log
+.git
+.gitignore
+README.md
+.env
+.env.*
+
+# Keep the videos folder structure but ignore actual video files
+videos/**/*.mov
+videos/**/*.braw
+videos/**/*.mp4
+videos/**/*.avi
+videos/**/*.mkv
+videos/**/*.wmv
+videos/**/*.flv
+videos/**/*.webm
